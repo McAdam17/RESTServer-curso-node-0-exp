@@ -60,8 +60,87 @@ const update = (req,res) => {
     });
 }
 
+const getAll = (req,res) => {
+    let desde = req.query.desde || 0;
+    desde = Number(desde);
+    let limite = req.query.limite || 5;
+    limite = Number(limite);
+    Usuario.find({status: true},'name email role state google img')
+                .skip(desde)
+                .limit(limite)
+                .exec( (err, usuarios) => {
+                    if (err){
+                        return res.status(400).json({
+                            status: false,
+                            err
+                        });
+                    }
+            
+                    res.json({
+                        status: true,
+                        total: usuarios.length,
+                        usuarios
+                    })
+                } )
+}
+
+const eliminar = (req,res) => {
+    const id = req.params.id;
+    let del = Boolean(req.query.del) || false;
+    if (del)
+        Usuario.findByIdAndRemove(id,(err,usuarioBorrado) => {
+            if (err){
+                return res.status(400).json({
+                    status: false,
+                    err
+                });
+            }
+
+            if(!usuarioBorrado){
+                return res.status(400).json({
+                    status: false,
+                    err: {
+                        message: 'Usuario no encontrado'
+                    }
+                });
+            }
+
+            res.json({
+                status: true,
+                usuario: usuarioBorrado
+            })
+
+        });
+    else
+        Usuario.findByIdAndUpdate(id, {state: false}, {new:true},(err,usuarioBorrado) => {
+            if (err){
+                return res.status(400).json({
+                    status: false,
+                    err
+                });
+            }
+
+            if(!usuarioBorrado){
+                return res.status(400).json({
+                    status: false,
+                    err: {
+                        message: 'Usuario no encontrado'
+                    }
+                });
+            }
+
+            res.json({
+                status: true,
+                usuario: usuarioBorrado
+            })
+
+        });
+}
+
 module.exports = {
     insert,
     update,
-    get
+    get,
+    getAll,
+    eliminar
 }
