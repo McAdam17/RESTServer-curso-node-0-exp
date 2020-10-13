@@ -7,11 +7,13 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//importar rutas del usuario
-app.use(require('./routes/v1/usuario'))
+//importar rutas 
+app.use(require('./routes/v1'));
 
 
-mongoose.connect('mongodb://localhost:27017/cafe', (err,res) =>{
+//process.env.URL_DB
+//'mongodb://localhost:27017/cafe'
+mongoose.connect(process.env.URL_DB, (err,res) =>{
     if (err) throw err;
     console.log('Connected to db');
 });
