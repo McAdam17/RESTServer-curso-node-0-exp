@@ -5,7 +5,7 @@ process.env.PORT = process.env.PORT || 3000;
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
 // Vencimiento del token
-process.env.CADUCIDAD_TOKEN = process.env.CADUCIDAD_TOKEN || 60* 60 * 24;
+process.env.CADUCIDAD_TOKEN = process.env.CADUCIDAD_TOKEN || '48h';
 // Semilla de token
 process.env.SEED_TOKEN = process.env.SEED_TOKEN || 'semilla-token';
 //Url de conexion

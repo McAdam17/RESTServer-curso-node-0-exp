@@ -7,7 +7,7 @@ app.get('/v1/usuario', verificarToken,userController.getAll);
 
 app.get('/v1/usuario/:id', verificarToken, userController.get);
 
-app.post('/v1/usuario', verificarToken, userController.insert);
+app.post('/v1/usuario', userController.insert);
 
 app.put('/v1/usuario/:id', verificarToken, userController.update);
 

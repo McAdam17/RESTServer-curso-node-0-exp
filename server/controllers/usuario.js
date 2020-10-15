@@ -41,9 +41,10 @@ const get = (req,res) => {
     });
 }
 
-
+//---------------------------
 const update = (req,res) => {
     const id = req.params.id;
+    
     const body = _.pick(req.body,['name','email','img','role','state']);
     
     Usuario.findOneAndUpdate(id, body, {new:true, runValidators: true, context: 'query'},(err, usuarioDB) => {
@@ -138,6 +139,24 @@ const eliminar = (req,res) => {
         });
 }
 
+const updateImg = (id,imgn, callback) =>{
+
+    Usuario.findOneAndUpdate(id, {img:imgn}, {new:true, runValidators: true, context: 'query'},(err, usuarioDB) => {
+        let resul = {};
+        if (err){
+            resul = {
+                status: false,
+                err
+            };
+        }
+        resul = {
+            status: true,
+            usuario: usuarioDB
+        };
+        callback(resul);
+    });
+}
+
 const login = (req,res) =>{
     const body = req.body;
 
@@ -186,5 +205,6 @@ module.exports = {
     get,
     getAll,
     eliminar,
+    updateImg,
     login
 }

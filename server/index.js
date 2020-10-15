@@ -10,7 +10,6 @@ app.use(bodyParser.json());
 //importar rutas 
 app.use(require('./routes/v1'));
 
-
 //process.env.URL_DB
 //'mongodb://localhost:27017/cafe'
 mongoose.connect(process.env.URL_DB, (err,res) =>{
